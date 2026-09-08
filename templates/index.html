@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Quantum-Inspired Cyber Threat Detection — Demonstrates teleportation-inspired signature verification and rule-based threat detection.">
+
+    <title>Quantum Threat Detection — Cybersecurity Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<!-- ═══ Navigation ═══ -->
+<nav class="navbar">
+    <div class="brand">
+        <div class="brand-icon">⚛</div>
+        <span>QDS Security</span>
+    </div>
+    <div class="nav-tabs">
+        <button class="nav-tab active" data-tab="overview">
+            <span class="tab-icon">🏠</span>
+            <span class="tab-label">Overview</span>
+        </button>
+        <button class="nav-tab" data-tab="generate">
+            <span class="tab-icon">🔐</span>
+            <span class="tab-label">Generate</span>
+        </button>
+        <button class="nav-tab" data-tab="verify">
+            <span class="tab-icon">✅</span>
+            <span class="tab-label">Verify</span>
+        </button>
+        <button class="nav-tab" data-tab="attacks">
+            <span class="tab-icon">⚔️</span>
+            <span class="tab-label">Attacks</span>
+        </button>
+        <button class="nav-tab" data-tab="dashboard">
+            <span class="tab-icon">📊</span>
+            <span class="tab-label">Dashboard</span>
+        </button>
+    </div>
+</nav>
+
+<!-- ═══ Main Content ═══ -->
+<div class="main-content">
+
+    <!-- ─── OVERVIEW TAB ──────────────────────────────────────── -->
+    <div id="panel-overview" class="tab-panel active">
+
+        <!-- Hero -->
+        <section class="hero">
+            <div class="hero-content">
+                <div class="hero-badge">⚛ COLLEGE PROJECT DEMONSTRATION</div>
+                <h1>Quantum-Inspired Cyber Threat Detection</h1>
+                <p>
+                    A simulation that demonstrates how quantum physics concepts — Bell states,
+                    teleportation, and measurement — can be applied to detect forgery,
+                    impersonation, replay attacks, unauthorized access, and channel manipulation
+                    in digital signatures.
+                </p>
+                <div class="hero-actions">
+                    <button class="btn btn-primary" onclick="goToTab('generate')">
+                        🚀 Start Demo
+                    </button>
+                    <button class="btn btn-secondary" onclick="goToTab('dashboard')">
+                        📊 View Dashboard
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Feature Cards -->
+        <div class="feature-grid">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon cyan">⚛</div>
+                    <h3>Quantum Simulation</h3>
+                </div>
+                <p>Simulates Bell state entanglement, measurement bits, and Pauli error correction used in quantum teleportation protocols.</p>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon purple">🛡</div>
+                    <h3>5 Attack Detections</h3>
+                </div>
+                <p>Rule-based engine detects forgery, impersonation, replay, unauthorized verification, and quantum channel manipulation.</p>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon emerald">📊</div>
+                    <h3>Live Analytics</h3>
+                </div>
+                <p>Real-time dashboard with threat scores, detection rates, event timeline, and verification accuracy metrics.</p>
+            </div>
+        </div>
+
+        <!-- Workflow Guide -->
+        <div class="section-header">
+            <h2>How It Works</h2>
+            <p>Follow these 4 steps to see the full quantum security demo in action.</p>
+        </div>
+        <div class="workflow">
+            <div class="workflow-step" onclick="goToTab('generate')">
+                <div class="step-number">1</div>
+                <div class="step-title">Generate Signature</div>
+                <div class="step-desc">Alice signs a message with quantum-inspired protocol</div>
+            </div>
+            <div class="workflow-step" onclick="goToTab('verify')">
+                <div class="step-number">2</div>
+                <div class="step-title">Verify Signature</div>
+                <div class="step-desc">Bob verifies the signature passes all checks</div>
+            </div>
+            <div class="workflow-step" onclick="goToTab('attacks')">
+                <div class="step-number">3</div>
+                <div class="step-title">Simulate Attacks</div>
+                <div class="step-desc">Mallory tries to break the system — and fails</div>
+            </div>
+            <div class="workflow-step" onclick="goToTab('dashboard')">
+                <div class="step-number">4</div>
+                <div class="step-title">View Dashboard</div>
+                <div class="step-desc">Monitor all security events and threat metrics</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ─── GENERATE TAB ──────────────────────────────────────── -->
+    <div id="panel-generate" class="tab-panel">
+        <div class="section-header">
+            <h2>🔐 Generate Quantum-Inspired Signature</h2>
+            <p>Create a digitally signed message using simulated quantum teleportation. The system generates a Bell state measurement, applies Pauli correction, and produces a unique session ID.</p>
+        </div>
+
+        <div class="card form-card">
+            <div class="form-group">
+                <label class="form-label" for="gen-message">Message to Sign</label>
+                <textarea id="gen-message" class="form-textarea" placeholder="Enter your secure message here... (e.g., 'Transfer $1000 to Account #4521')"></textarea>
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="gen-signer">Signer Identity</label>
+                <input id="gen-signer" class="form-input" type="text" value="Alice" placeholder="Who is signing this message?">
+            </div>
+            <div class="form-actions">
+                <button id="btn-generate" class="btn btn-primary" onclick="generateSignature()">
+                    <span class="spinner"></span>
+                    <span class="btn-text">⚡ Generate Signature</span>
+                </button>
+            </div>
+        </div>
+
+        <div id="generate-result" class="result-container"></div>
+    </div>
+
+    <!-- ─── VERIFY TAB ────────────────────────────────────────── -->
+    <div id="panel-verify" class="tab-panel">
+        <div class="section-header">
+            <h2>✅ Verify Signature</h2>
+            <p>Check if a quantum-signed session is authentic. The system validates authorization, checks for replay attacks, and verifies measurement consistency.</p>
+        </div>
+
+        <div class="card form-card">
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label" for="verify-session">Session ID</label>
+                    <input id="verify-session" class="form-input" data-field="session_id" type="text" placeholder="QDS-XXXXXXXX">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="verify-verifier">Verifier Identity</label>
+                    <input id="verify-verifier" class="form-input" type="text" value="Bob" placeholder="Authorized: Bob, Charlie">
+                </div>
+            </div>
+            <div class="form-actions">
+                <button id="btn-verify" class="btn btn-primary" onclick="verifySignature()">
+                    <span class="spinner"></span>
+                    <span class="btn-text">🔍 Verify Signature</span>
+                </button>
+            </div>
+        </div>
+
+        <div id="verify-result" class="result-container"></div>
+    </div>
+
+    <!-- ─── ATTACKS TAB ───────────────────────────────────────── -->
+    <div id="panel-attacks" class="tab-panel">
+        <div class="section-header">
+            <h2>⚔️ Attack Simulation Center</h2>
+            <p>Simulate different cyber attacks against a quantum-signed session. Watch the detection engine identify and block each threat in real-time.</p>
+        </div>
+
+        <!-- Attack info cards -->
+        <div class="attack-type-cards">
+            <div class="attack-info-card">
+                <div class="attack-name">Forgery</div>
+                <div class="attack-desc">Alter the signed message or signature</div>
+            </div>
+            <div class="attack-info-card">
+                <div class="attack-name">Impersonation</div>
+                <div class="attack-desc">Pretend to be the original signer</div>
+            </div>
+            <div class="attack-info-card">
+                <div class="attack-name">Replay</div>
+                <div class="attack-desc">Reuse an already-consumed session</div>
+            </div>
+            <div class="attack-info-card">
+                <div class="attack-name">Unauthorized</div>
+                <div class="attack-desc">Verify without proper credentials</div>
+            </div>
+            <div class="attack-info-card">
+                <div class="attack-name">Channel</div>
+                <div class="attack-desc">Manipulate quantum channel data</div>
+            </div>
+        </div>
+
+        <div class="card form-card">
+            <div class="form-group">
+                <label class="form-label" for="attack-session">Target Session ID</label>
+                <input id="attack-session" class="form-input" data-field="session_id" type="text" placeholder="Generate a signature first, then paste the session ID here">
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label" for="attack-attacker">Attacker Identity</label>
+                    <input id="attack-attacker" class="form-input" type="text" value="Mallory" placeholder="Who is attacking?">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="attack-type">Attack Type</label>
+                    <select id="attack-type" class="form-select">
+                        <option value="forgery">🔨 Forgery — Alter message/signature</option>
+                        <option value="impersonation">🎭 Impersonation — Fake identity</option>
+                        <option value="replay">🔄 Replay — Reuse session</option>
+                        <option value="unauthorized">🚷 Unauthorized — No credentials</option>
+                        <option value="channel">📡 Channel Manipulation — Quantum interference</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-actions">
+                <button id="btn-attack" class="btn btn-danger" onclick="launchAttack()">
+                    <span class="spinner"></span>
+                    <span class="btn-text">💥 Launch Attack Simulation</span>
+                </button>
+            </div>
+        </div>
+
+        <div id="attack-result" class="result-container"></div>
+    </div>
+
+    <!-- ─── DASHBOARD TAB ─────────────────────────────────────── -->
+    <div id="panel-dashboard" class="tab-panel">
+        <div class="refresh-bar">
+            <div class="section-header section-header--flush">
+                <h2>📊 Security Analytics Dashboard</h2>
+                <p>Real-time overview of all security events and system metrics.</p>
+            </div>
+            <div class="auto-refresh-badge">
+                <span class="pulse-dot"></span>
+                Auto-refresh: 10s
+            </div>
+        </div>
+
+        <div id="dash-metrics" class="metrics-grid">
+            <!-- Filled by JS -->
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <div class="card-icon blue">📋</div>
+                <h3>Recent Security Events</h3>
+            </div>
+            <div id="dash-events" class="events-list">
+                <div class="empty-state">
+                    <div class="empty-icon">📭</div>
+                    <p>No events yet. Generate a signature and start testing!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

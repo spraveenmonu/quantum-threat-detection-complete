@@ -1,0 +1,10 @@
+{% extends "base.html" %}{% block content %}<h1>Generate Quantum-Inspired Signature</h1>
+<div class="card form">
+    <label for="message">Message</label>
+    <textarea id="message" placeholder="Enter secure message"></textarea>
+    <label for="signer">Signer</label>
+    <input id="signer" value="Alice" placeholder="Signer name">
+    <button class="btn" onclick="generateSignature()">Generate Signature</button>
+</div>
+<pre id="result" class="result"></pre>
+{% endblock %}

@@ -1,0 +1,5 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Quantum Security Demo</title><link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"></head>
+<body><nav><div class="brand">⚛ QDS Security</div><a href="/">Home</a><a href="/generate">Generate</a><a href="/verify">Verify</a><a href="/attacks">Attacks</a><a href="/dashboard">Dashboard</a></nav>
+<main>{% block content %}{% endblock %}</main><script src="{{ url_for('static', filename='js/script.js') }}"></script></body></html>

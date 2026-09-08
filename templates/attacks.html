@@ -1,0 +1,18 @@
+{% extends "base.html" %}{% block content %}<h1>Attack Simulation Center</h1>
+<div class="card form">
+    <label for="session_id">Existing Session ID</label>
+    <input id="session_id" placeholder="Generate a signature first">
+    <label for="attacker">Attacker</label>
+    <input id="attacker" value="Mallory" placeholder="Attacker name">
+    <label for="attack_type">Attack Type</label>
+    <select id="attack_type" title="Select attack type">
+        <option value="forgery">Forgery</option>
+        <option value="impersonation">Impersonation</option>
+        <option value="replay">Replay</option>
+        <option value="unauthorized">Unauthorized Verification</option>
+        <option value="channel">Quantum Channel Manipulation</option>
+    </select>
+    <button class="danger" onclick="launchAttack()">Launch Attack Simulation</button>
+</div>
+<pre id="result" class="result"></pre>
+{% endblock %}

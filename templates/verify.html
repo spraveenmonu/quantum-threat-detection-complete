@@ -1,0 +1,2 @@
+{% extends "base.html" %}{% block content %}<h1>Verify Signature</h1>
+<div class="card form"><label>Session ID</label><input id="session_id" placeholder="QDS-XXXXXXXX"><label>Verifier</label><input id="verifier" value="Bob"><button class="btn" onclick="verifySignature()">Verify</button></div><pre id="result" class="result"></pre>{% endblock %}
