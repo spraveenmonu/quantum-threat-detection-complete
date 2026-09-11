@@ -1,12 +1,25 @@
 import sqlite3
 import os
+import shutil
 
-DB = os.path.join(os.path.dirname(__file__), "quantum_security.db")
+# Store database in hidden .data/ directory so local dev watchers (e.g. VS Code Live Server)
+# do NOT detect database writes and trigger unintended browser auto-reloads.
+DATA_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), ".data")
+os.makedirs(DATA_DIR, exist_ok=True)
+DB = os.path.join(DATA_DIR, "quantum_security.db")
+
+# Migrate existing database if needed
+OLD_DB = os.path.join(os.path.dirname(__file__), "quantum_security.db")
+if os.path.exists(OLD_DB) and not os.path.exists(DB):
+    try:
+        shutil.copy2(OLD_DB, DB)
+    except Exception:
+        pass
 
 
 def conn():
     """Create a new database connection with Row factory."""
-    c = sqlite3.connect(DB)
+    c = sqlite3.connect(DB, timeout=15, check_same_thread=False)
     c.row_factory = sqlite3.Row
     return c
 
@@ -14,6 +27,7 @@ def conn():
 def init_db():
     """Initialize database tables if they don't exist."""
     with conn() as c:
+        c.execute("PRAGMA journal_mode=WAL;")
         c.execute("""CREATE TABLE IF NOT EXISTS signatures (
             session_id TEXT PRIMARY KEY,
             message TEXT NOT NULL,
