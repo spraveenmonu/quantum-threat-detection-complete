@@ -185,23 +185,52 @@ def api_signature_details(session_id):
         if not row:
             return jsonify({"ok": False, "error": "Session not found."})
 
+        sig_dict = {
+            "session_id": row["session_id"],
+            "message": row["message"],
+            "message_hash": row["message_hash"],
+            "signer": row["signer"],
+            "bell_state": row["bell_state"],
+            "pauli_correction": row["pauli_correction"],
+            "measurement_match": row["measurement_match"],
+            "status": row["status"],
+            "created_at": row["created_at"],
+            "consumed": bool(row["consumed"]),
+        }
+        if "circuit_diagram" in row.keys():
+            sig_dict["circuit_diagram"] = row["circuit_diagram"]
+        if "backend" in row.keys():
+            sig_dict["backend"] = row["backend"]
+
         return jsonify({
             "ok": True,
-            "signature": {
-                "session_id": row["session_id"],
-                "message": row["message"],
-                "message_hash": row["message_hash"],
-                "signer": row["signer"],
-                "bell_state": row["bell_state"],
-                "pauli_correction": row["pauli_correction"],
-                "measurement_match": row["measurement_match"],
-                "status": row["status"],
-                "created_at": row["created_at"],
-                "consumed": bool(row["consumed"]),
-            },
+            "signature": sig_dict,
         })
     except Exception:
         return jsonify({"ok": False, "error": "Internal error fetching signature details."}), 500
+
+
+@app.get("/api/quantum-status")
+def api_quantum_status():
+    """Return status and telemetry of the quantum computing stack."""
+    try:
+        import qiskit
+        import qiskit_aer
+        import pennylane as qml
+
+        return jsonify({
+            "ok": True,
+            "qiskit_version": qiskit.__version__,
+            "aer_version": qiskit_aer.__version__,
+            "pennylane_version": qml.__version__,
+            "simulator": "AerSimulator (statevector)",
+            "pennylane_device": "default.qubit (4 wires)",
+            "teleportation_protocol": "3-Qubit Bennett Teleportation with Bell Basis Measurement",
+            "qnn_architecture": "4-Qubit Variational Quantum Classifier (AngleEmbedding + StronglyEntanglingLayers)",
+            "status": "ACTIVE",
+        })
+    except Exception as e:
+        return jsonify({"ok": False, "error": str(e)}), 500
 
 
 @app.get("/api/attack-info")

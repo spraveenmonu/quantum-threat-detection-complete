@@ -2003,13 +2003,13 @@
             <!-- Hero -->
             <section class="hero">
                 <div class="hero-content">
-                    <div class="hero-badge">⚛ SIH 2026 PROJECT DEMONSTRATION</div>
-                    <h1>Quantum-Inspired Cyber Threat Detection</h1>
+                    <div class="hero-badge">⚛️ HYBRID QUANTUM STACK: QISKIT 2.x • QISKIT AER • PENNYLANE 0.45</div>
+                    <h1>Quantum-Secured Cyber Threat Detection</h1>
                     <p>
-                        A simulation that demonstrates how quantum physics concepts — Bell states,
-                        teleportation, and measurement — can be applied to detect forgery,
-                        impersonation, replay attacks, unauthorized access, and channel manipulation
-                        in digital signatures.
+                        A cybersecurity platform powered by genuine quantum computing simulations —
+                        <strong>Qiskit Aer</strong> executes 3-qubit Bennett teleportation & Bell-state entanglement,
+                        while <strong>PennyLane</strong> powers a 4-qubit Variational Quantum Classifier (VQC)
+                        to detect forgery, impersonation, replay attacks, unauthorized access, and quantum channel eavesdropping.
                     </p>
                     <div class="hero-actions">
                         <button class="btn btn-primary" onclick="goToTab('generate')">
@@ -2027,26 +2027,30 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="card-icon cyan">⚛</div>
-                        <h3>Quantum Simulation</h3>
+                        <h3>Qiskit & Aer Teleportation</h3>
                     </div>
-                    <p>Simulates Bell state entanglement, measurement bits, and Pauli error correction used in quantum
-                        teleportation protocols.</p>
+                    <p>Simulates real 3-qubit Bennett teleportation circuits, Bell basis measurement, and statevector fidelity calculation using Qiskit Aer.</p>
                 </div>
                 <div class="card">
                     <div class="card-header">
-                        <div class="card-icon purple">🛡</div>
-                        <h3>5 Attack Detections</h3>
+                        <div class="card-icon purple">🧠</div>
+                        <h3>PennyLane QNN Classifier</h3>
                     </div>
-                    <p>Rule-based engine detects forgery, impersonation, replay, unauthorized verification, and quantum
-                        channel manipulation.</p>
+                    <p>Variational Quantum Classifier (VQC) with AngleEmbedding & StronglyEntanglingLayers to score threat anomalies in quantum Hilbert space.</p>
                 </div>
                 <div class="card">
                     <div class="card-header">
-                        <div class="card-icon emerald">📊</div>
+                        <div class="card-icon emerald">🛡</div>
+                        <h3>Eavesdropping Detection</h3>
+                    </div>
+                    <p>Eavesdropping on the transit channel triggers state collapse (No-Cloning Theorem), degrading fidelity below 80% to block attacks.</p>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon amber">📊</div>
                         <h3>Live Analytics</h3>
                     </div>
-                    <p>Real-time dashboard with threat scores, detection rates, event timeline, and verification
-                        accuracy metrics.</p>
+                    <p>Real-time dashboard with threat scores, detection rates, event timeline, and verification accuracy metrics.</p>
                 </div>
             </div>
 
@@ -2444,14 +2448,30 @@
                         <div class="field-value">${sig.pauli_correction}</div>
                     </div>
                     <div class="result-field">
-                        <div class="field-label">Measurement Match</div>
-                        <div class="field-value large">${sig.measurement_match}%</div>
+                        <div class="field-label">Aer Match / Fidelity</div>
+                        <div class="field-value large" style="color:var(--accent-emerald)">${sig.measurement_match}%</div>
+                    </div>
+                    <div class="result-field">
+                        <div class="field-label">PennyLane QNN Anomaly</div>
+                        <div class="field-value large" style="color:var(--accent-cyan)">${sig.qnn_threat_score !== undefined ? sig.qnn_threat_score + '%' : 'Nominal'}</div>
                     </div>
                 </div>
                 <div class="result-reason">
                     <strong>Message Hash (SHA-256):</strong><br>
                     <code style="color:var(--accent-cyan);font-family:'JetBrains Mono',monospace;font-size:12px;word-break:break-all">${sig.message_hash}</code>
                 </div>
+                ${sig.circuit_diagram ? `
+                <div class="accordion" style="margin-top:14px">
+                    <button type="button" class="accordion-toggle active" onclick="toggleAccordion(this)">
+                        <span>⚛️ Qiskit Teleportation Circuit Diagram (AerSimulator)</span>
+                        <span class="accordion-arrow">▾</span>
+                    </button>
+                    <div class="accordion-content" style="max-height:500px">
+                        <div class="accordion-inner">
+                            <pre style="white-space:pre;font-family:'JetBrains Mono',monospace;color:var(--accent-cyan);font-size:11px;line-height:1.4;margin:0;overflow-x:auto;padding:12px;background:#050914;border:1px solid var(--border-subtle);border-radius:6px">${escapeHtml(sig.circuit_diagram)}</pre>
+                        </div>
+                    </div>
+                </div>` : ''}
             </div>
         </div>
     `;
@@ -2586,6 +2606,10 @@
                         <div class="field-label">Consumed</div>
                         <div class="field-value large" style="color:var(--accent-${sig.consumed ? 'rose' : 'emerald'})">${sig.consumed ? 'Yes' : 'No'}</div>
                     </div>
+                    <div class="result-field">
+                        <div class="field-label">Quantum Stack</div>
+                        <div class="field-value" style="font-size:11px;color:var(--accent-cyan)">${sig.backend || 'Qiskit Aer'} • PennyLane</div>
+                    </div>
                 </div>
 
                 <!-- Expandable Sections -->
@@ -2611,6 +2635,18 @@
                         </div>
                     </div>
                 </div>
+                ${sig.circuit_diagram ? `
+                <div class="accordion">
+                    <button class="accordion-toggle" onclick="toggleAccordion(this)">
+                        <span>⚛️ Qiskit Teleportation Circuit Diagram (AerSimulator)</span>
+                        <span class="accordion-arrow">▸</span>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="accordion-inner">
+                            <pre style="white-space:pre;font-family:'JetBrains Mono',monospace;color:var(--accent-cyan);font-size:11px;line-height:1.4;margin:0;overflow-x:auto;padding:12px;background:#050914;border:1px solid var(--border-subtle);border-radius:6px">${escapeHtml(sig.circuit_diagram)}</pre>
+                        </div>
+                    </div>
+                </div>` : ''}
             </div>
         </div>
     `;
@@ -2650,8 +2686,9 @@
                 { name: 'session_exists', label: 'Session Lookup', icon: '🔍' },
                 { name: 'authorization', label: 'Authorization Check', icon: '🔐' },
                 { name: 'replay', label: 'Replay Detection', icon: '🔄' },
-                { name: 'channel_integrity', label: 'Channel Integrity', icon: '📡' },
+                { name: 'channel_integrity', label: 'Channel Integrity (Qiskit Aer)', icon: '📡' },
                 { name: 'hash_integrity', label: 'Hash Integrity', icon: '🔗' },
+                { name: 'qnn_anomaly', label: 'PennyLane VQC Anomaly Check', icon: '🧠' },
             ];
 
             stepsContainer.innerHTML = `
@@ -3315,19 +3352,20 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // ── Server Health Check ───────────────────────────────────────
+        // ── Server & Quantum Health Check ──────────────────────────────
         async function checkServerStatus() {
             const dot = document.getElementById('server-status-dot');
             const text = document.getElementById('server-status-text');
             if (!dot || !text) return;
 
             try {
-                const fullUrl = API_BASE ? `${API_BASE}/api/attack-info` : '/api/attack-info';
+                const fullUrl = API_BASE ? `${API_BASE}/api/quantum-status` : '/api/quantum-status';
                 const res = await fetch(fullUrl, { method: 'GET' });
                 if (res.ok) {
+                    const qData = await res.json();
                     dot.className = 'status-dot connected';
-                    text.textContent = 'API Connected' + (API_BASE ? ' (127.0.0.1:5000)' : '');
-                    text.title = 'Connected to Quantum Detection Backend';
+                    text.textContent = `Qiskit ${qData.qiskit_version} • Aer • PennyLane ${qData.pennylane_version}`;
+                    text.title = `Simulator: ${qData.simulator} | QNN: ${qData.pennylane_device}`;
                 } else {
                     dot.className = 'status-dot disconnected';
                     text.textContent = 'API Error (' + res.status + ')';

@@ -50,6 +50,12 @@ def init_db():
             details TEXT,
             created_at TEXT NOT NULL
         )""")
+        # Ensure optional quantum telemetry columns exist
+        for col, col_type in [("circuit_diagram", "TEXT"), ("backend", "TEXT")]:
+            try:
+                c.execute(f"ALTER TABLE signatures ADD COLUMN {col} {col_type};")
+            except Exception:
+                pass
 
 
 def execute(sql, params=()):
